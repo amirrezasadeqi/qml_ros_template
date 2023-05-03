@@ -1,0 +1,3 @@
+{
+    "files": ["qml_ros_node.py", "qml/main.qml"]
+}
