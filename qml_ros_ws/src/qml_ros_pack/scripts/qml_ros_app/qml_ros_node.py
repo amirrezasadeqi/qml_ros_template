@@ -11,6 +11,8 @@ import rospy
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Signal, Slot, QTimer, QUrl
+# this is to use QtQuick ChartView
+from PySide2.QtWidgets import QApplication
 
 
 class MainWindow(QObject):
@@ -83,7 +85,9 @@ class MainWindow(QObject):
 
 
 if __name__ == "__main__":
-    app = QGuiApplication(sys.argv)
+    # Using QApplication instead of QGuiApplication to use ChartView, I think
+    # this is a bug we should do this to use ChartView.
+    app = QApplication(sys.argv)
     engine = QQmlApplicationEngine()
 
     rospy.init_node('qml_ros_node')
@@ -97,7 +101,7 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("backend", main)
 
     # loading qml file
-    qml_file = Path(__file__).resolve().parent / "qml/main.qml"
+    qml_file = Path(__file__).resolve().parent / "qml/QmlRosSketch.qml"
     engine.load(str(qml_file))
     if not engine.rootObjects():
         sys.exit(-1)

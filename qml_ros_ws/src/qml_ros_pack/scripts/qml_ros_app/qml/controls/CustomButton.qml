@@ -3,13 +3,14 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
 Button{
-    id: custom_button
+    id: customBtn
 
     // Custom Properties
-    property color color_default: "#c71541"
-    property color color_mouse_over: "#c24262"
-    property color color_pressed: "#2c0303"
-    property url button_icon_source: "../../images/svg_images/menu_icon.svg"
+    property color colorDefault: "#c71541"
+    property color colorMouseOver: "#c24262"
+    property color colorPressed: "#2c0303"
+    property url btnIconSource: "../../images/svg_images/menu_icon.svg"
+    property real btnRadius: 0
     icon.width: 24
     flat: false
     font.bold: false
@@ -17,54 +18,35 @@ Button{
     QtObject{
         id: internal // for functions changing the button color
 
-        property var dynamic_color: if(custom_button.down){
-                                        color_pressed
+        property var dynamicColor: if(customBtn.down){
+                                        colorPressed
                                     }else{
-                                        custom_button.hovered ? color_mouse_over : color_default
+                                        customBtn.hovered ? colorMouseOver : colorDefault
                                     }
     }
 
-
-//    text: qsTr("Custom Button")
-//    font.family: "Times New Roman"
-//    icon.color: "#111010"
     implicitWidth: 70
     implicitHeight: 60
 
     background: Rectangle{
-        id: button_bg
-        color: internal.dynamic_color
-//        color: "#c71541"
-//        radius: 10
-
+        id: btnBg
+        color: internal.dynamicColor
+        radius: customBtn.btnRadius
         Image {
-            id: button_icon
+            id: btnIcon
             width: 16
             height: 16
             anchors.verticalCenter: parent.verticalCenter
-            source: button_icon_source
+            source: btnIconSource
             anchors.horizontalCenter: parent.horizontalCenter
             fillMode: Image.PreserveAspectFit
         }
 
         ColorOverlay{
-            anchors.fill: button_icon
-            source: button_icon
+            anchors.fill: btnIcon
+            source: btnIcon
             color: "#ffffff"
             antialiasing: false
         }
     }
-
-//    contentItem: Item {
-//        id: button_content
-//        Text {
-//            id: text_button
-//            text: custom_button.text
-//            anchors.verticalCenter: parent.verticalCenter
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            font.bold: true
-//            color: "#e1f902"
-
-//        }
-//    }
 }
